@@ -1,4 +1,6 @@
 {
 	"name":"onewire",
-	"dependencies":{}
+	"dependencies":{
+		"node-w1bus": "^0.1.2"
+	}
 }
