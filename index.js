@@ -2,13 +2,7 @@ var w1bus					= require('node-w1bus');
 var bus						= w1bus.create();
 var config					= bus.getConfig();
 var adapter 				= require('../../adapter-lib.js');
-var onewire					= new adapter({
-	"name": "Onewire",
-	"loglevel": 3,
-	"description": "Liest angeschlossene 1-Wire Sensoren aus.",
-	"settingsFile": ""
-});
-// onewire.log.debug(config);
+var onewire					= new adapter("onewire");
 
 process.on('message', function(data) {
 	var status = data.status;
