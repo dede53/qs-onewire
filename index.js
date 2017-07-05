@@ -31,3 +31,21 @@ function saveSensors(status, data){
 		}
 	});
 }
+
+bus.listAllSensors().then(function(data){
+	if(data.err){
+		onewire.log.error(data);
+	}else{
+		var opt_measureType = "temperature";
+		data.ids.forEach(function(sensor){
+			bus.getValueFrom(sensor, opt_measureType).then(function(res){
+				if(res.err){
+					onewire.log.error(res);
+				}else{
+					// Ausgelesene Daten an die Datenbank schicken
+					onewire.log.info(sensor + ':' + res.result.value);
+				}
+			});	
+		});
+	}
+});
