@@ -4,13 +4,22 @@ var config					= bus.getConfig();
 var adapter 				= require('../../adapter-lib.js');
 var onewire					= new adapter("onewire");
 
-process.on('message', function(request) {
-	var status = request.status;
-	var data = request.data;
-	saveSensors(status, data);
+process.on("message", function(data){
+	switch(data.protocol){
+		case "setSetting":
+			onewire.setSetting(data.data);
+			break;
+		case "save":
+			saveSensors(data);
+			break;
+		default:
+			onewire.log.error("Nicht definiertes Protocol:" + data.protocol);
+			break;
+
+	}
 });
 
-function saveSensors(status, data){
+function saveSensors(data){
 	onewire.log.info("Lese Temperaturen aus den 1-Wiresensoren...");
 	bus.listAllSensors().then(function(data){
 		if(data.err){
