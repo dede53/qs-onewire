@@ -4,7 +4,7 @@ var config					= bus.getConfig();
 var adapter 				= require('../../adapter-lib.js');
 var onewire					= new adapter("onewire");
 
-process.on("message", function(data){
+onewire.on("onewire", function(data){
 	switch(data.protocol){
 		case "setSetting":
 			onewire.setSetting(data.data);
